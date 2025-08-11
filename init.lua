@@ -19,16 +19,16 @@ vim.keymap.set('i', '<C-y>', '<Esc><C-r>', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-z>', 'u', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-y>', '<C-r>', { noremap = true, silent = true })
 
-vim.lsp.enable('pyright')
+-- vim.lsp.enable('pyright')
 
 local lspconfig = require('lspconfig')
 lspconfig.ols.setup {
-	init_options = {
-		-- checker_args = "-strict-style",
-		-- collections = {
-			-- { name = "shared", path = vim.fn.expand('$HOME/odin-lib') }
-		-- },
-	},
+	cmd = { "D:/Languages/odin_ols/ols.exe" },
+	filetypes = { "odin" },
+	root_dir = lspconfig.util.root_pattern("ols.json", ".git"),
+	settings = {
+		collections = {
+			{ name = "CoffeeBreak", path = "D:/Repos/CoffeeBreak" }
+		}
+	}
 }
-
--- vim.lsp.enable('ols')
