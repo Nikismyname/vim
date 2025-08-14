@@ -14,7 +14,10 @@ vim.pack.add{
   { src = 'https://github.com/hrsh7th/cmp-buffer' },
   { src = 'https://github.com/hrsh7th/cmp-path' },
   { src = 'https://github.com/hrsh7th/cmp-vsnip' },
-  { src = 'https://github.com/hrsh7th/vim-vsnip' }
+  { src = 'https://github.com/hrsh7th/vim-vsnip' },
+  { src = 'https://github.com/nvim-telescope/telescope.nvim' },
+  { src = 'https://github.com/nvim-lua/plenary.nvim' },
+  { src = 'https://github.com/BurntSushi/ripgrep' }
 }
 
 vim.keymap.set('i', '<C-z>', '<Esc>u', { noremap = true, silent = true })
@@ -33,8 +36,6 @@ lspconfig.ols.setup {
 		}
 	}
 }
-
-vim.cmd('syntax on')
 
 local cmp = require('cmp')
 cmp.setup({
@@ -77,3 +78,35 @@ vim.keymap.set("i", "<C-c>", '"+y', { noremap = true, silent = true })
 
 vim.keymap.set("n", "<C-v>", '"+p', { noremap = true, silent = true })
 vim.keymap.set("i", "<C-v>", '<Esc>"+pa', { noremap = true, silent = true })
+
+vim.filetype.add({
+  extension = {
+    odin = "odin"
+  }
+})
+
+vim.cmd('syntax on')
+
+require('telescope').setup {
+  defaults = {
+    file_ignore_patterns = {
+      "%.git/",        -- matches `.git/` anywhere
+      "%.git/.*",      -- matches everything inside `.git/`
+      "^.git/",        -- matches `.git/` at root
+      "^./.git/",      -- matches `.git/` in current dir
+    }
+  }
+}
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', 'ff', builtin.find_files, { desc = 'Telescope find files' })
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    local dir = vim.fn.expand("%:p:h")
+    if vim.fn.isdirectory(dir) == 1 then
+      vim.cmd("lcd " .. dir)
+    end
+  end
+})
+
