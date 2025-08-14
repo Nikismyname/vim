@@ -1,25 +1,21 @@
--- Basic settings
 vim.opt.number = true
 vim.opt.relativenumber = true
 
 vim.pack.add{
   { src = 'https://github.com/neovim/nvim-lspconfig' },
+  { src = 'https://github.com/Tetralux/odin.vim' },
+  { src = 'https://github.com/hrsh7th/nvim-cmp' },
+  { src = 'https://github.com/hrsh7th/cmp-nvim-lsp' },
+  { src = 'https://github.com/hrsh7th/cmp-buffer' },
+  { src = 'https://github.com/hrsh7th/cmp-path' },
+  { src = 'https://github.com/hrsh7th/cmp-vsnip' },
+  { src = 'https://github.com/hrsh7th/vim-vsnip' }
 }
-
--- Custom startup message
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    print("🚀 Welcome to Neovim, powered by Lua!")
-  end
-})
-
 
 vim.keymap.set('i', '<C-z>', '<Esc>u', { noremap = true, silent = true })
 vim.keymap.set('i', '<C-y>', '<Esc><C-r>', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-z>', 'u', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-y>', '<C-r>', { noremap = true, silent = true })
-
--- vim.lsp.enable('pyright')
 
 local lspconfig = require('lspconfig')
 lspconfig.ols.setup {
@@ -32,3 +28,38 @@ lspconfig.ols.setup {
 		}
 	}
 }
+
+vim.cmd('syntax on')
+
+local cmp = require('cmp')
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+    { name = 'buffer' },
+    { name = 'path' }
+  })
+})
