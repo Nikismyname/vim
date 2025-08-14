@@ -1,6 +1,11 @@
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+vim.opt.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.smarttab = true
+
 vim.pack.add{
   { src = 'https://github.com/neovim/nvim-lspconfig' },
   { src = 'https://github.com/Tetralux/odin.vim' },
@@ -63,3 +68,12 @@ cmp.setup({
     { name = 'path' }
   })
 })
+
+vim.opt.clipboard:append("unnamedplus")
+
+vim.keymap.set("v", "<C-c>", '"+y', { noremap = true, silent = true })
+vim.keymap.set("n", "<C-c>", '"+y', { noremap = true, silent = true })
+vim.keymap.set("i", "<C-c>", '"+y', { noremap = true, silent = true })
+
+vim.keymap.set("n", "<C-v>", '"+p', { noremap = true, silent = true })
+vim.keymap.set("i", "<C-v>", '<Esc>"+pa', { noremap = true, silent = true })
