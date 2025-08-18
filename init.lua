@@ -1,5 +1,5 @@
 vim.opt.number = true
-vim.opt.relativenumber = true
+-- vim.opt.relativenumber = true
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
@@ -8,7 +8,6 @@ vim.opt.smarttab = true
 
 vim.pack.add{
   { src = 'https://github.com/neovim/nvim-lspconfig' },
-  { src = 'https://github.com/Tetralux/odin.vim' },
   { src = 'https://github.com/hrsh7th/nvim-cmp' },
   { src = 'https://github.com/hrsh7th/cmp-nvim-lsp' },
   { src = 'https://github.com/hrsh7th/cmp-buffer' },
@@ -17,7 +16,6 @@ vim.pack.add{
   { src = 'https://github.com/hrsh7th/vim-vsnip' },
   { src = 'https://github.com/nvim-telescope/telescope.nvim' },
   { src = 'https://github.com/nvim-lua/plenary.nvim' },
-  { src = 'https://github.com/BurntSushi/ripgrep' }
 }
 
 vim.keymap.set('i', '<C-z>', '<Esc>u', { noremap = true, silent = true })
@@ -65,7 +63,6 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
-    { name = 'buffer' },
     { name = 'path' }
   })
 })
@@ -78,6 +75,8 @@ vim.keymap.set("i", "<C-c>", '"+y', { noremap = true, silent = true })
 
 vim.keymap.set("n", "<C-v>", '"+p', { noremap = true, silent = true })
 vim.keymap.set("i", "<C-v>", '<Esc>"+pa', { noremap = true, silent = true })
+vim.keymap.set("n", "<C-e>", ':Explore<CR>', { noremap = true, silent = true })
+vim.keymap.set("n", "<C-u>", ':cd..<CR>', { noremap = true, silent = true })
 
 vim.filetype.add({
   extension = {
@@ -110,3 +109,4 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end
 })
 
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', {noremap = true})
