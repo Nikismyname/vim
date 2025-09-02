@@ -98,7 +98,12 @@ require('telescope').setup {
 }
 
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', 'ff', builtin.find_files, { desc = 'Telescope find files' })
+local util = require('lspconfig.util')  -- for detecting project root
+
+vim.keymap.set('n', 'ff', function()
+  local root = util.root_pattern('.git')(vim.fn.expand('%:p'))
+  builtin.find_files({ cwd = root or vim.loop.cwd() })
+end, { desc = 'Telescope find files from project root' })
 
 vim.api.nvim_create_autocmd("BufEnter", {
   callback = function()
@@ -110,3 +115,4 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', {noremap = true})
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
