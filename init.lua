@@ -116,3 +116,30 @@ vim.api.nvim_create_autocmd("BufEnter", {
 
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', {noremap = true})
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
+vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'Show references' })
+
+vim.opt.sessionoptions = {
+  "buffers",     -- open buffers
+  "curdir",      -- current directory
+  "tabpages",    -- all tab pages
+  "winsize",     -- window sizes
+  "globals",     -- global variables
+}
+
+-- vim.keymap.set('n', '<Esc>', function()
+  -- local root = util.root_pattern('.git')(vim.fn.expand('%:p'))
+  -- local session_file = root .. '/.nvim-session.vim'
+  -- vim.cmd('mksession! ' .. session_file)
+  -- print('Session saved to ' .. session_file)
+-- end, { noremap = true, silent = true, desc = 'Save session to project root' })
+
+-- vim.keymap.set('n', '<F6>', function()
+  -- local root = vim.fn.getcwd()
+  -- local session_file = root .. '/.nvim-session.vim'
+  -- if vim.fn.filereadable(session_file) == 1 then
+    -- vim.cmd('source ' .. session_file)
+    -- print('Session loaded from ' .. session_file)
+  -- else
+    -- print('No session file found at ' .. session_file)
+  -- end
+-- end, { noremap = true, silent = true, desc = 'Load session from project root' })
