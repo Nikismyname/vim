@@ -69,12 +69,19 @@ cmp.setup({
 
 vim.opt.clipboard:append("unnamedplus")
 
+-- copy paste
 vim.keymap.set("v", "<C-c>", '"+y', { noremap = true, silent = true })
 vim.keymap.set("n", "<C-c>", '"+y', { noremap = true, silent = true })
 vim.keymap.set("i", "<C-c>", '"+y', { noremap = true, silent = true })
 
+vim.keymap.set("v", "<C-x>", '"+d', { noremap = true, silent = true }) -- Visual mode
+vim.keymap.set("n", "<C-x>", '"+d', { noremap = true, silent = true }) -- Normal mode
+vim.keymap.set("i", "<C-x>", '"+d', { noremap = true, silent = true })
+
 vim.keymap.set("n", "<C-v>", '"+p', { noremap = true, silent = true })
 vim.keymap.set("i", "<C-v>", '<Esc>"+pa', { noremap = true, silent = true })
+--
+
 vim.keymap.set("n", "<C-e>", ':Explore<CR>', { noremap = true, silent = true })
 vim.keymap.set("n", "<C-u>", ':cd..<CR>', { noremap = true, silent = true })
 
